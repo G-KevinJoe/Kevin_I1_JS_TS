@@ -1,0 +1,41 @@
+<!-- 13. Shopping Cart Counter
+Write JavaScript to implement a cart quantity counter with increment, decrement, and reset
+buttons. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Counter</title>
+</head>
+<body>
+    <h1>Shopping Cart Quantity</h1>
+    <p>Quantity: <span id="quantity">0</span></p>
+    <button id="increment">Increment</button>
+    <button id="decrement">Decrement</button>
+    <button id="reset">Reset</button>
+
+    <script>
+        let quantity = 0;
+        const quantityDisplay = document.getElementById("quantity");
+
+        document.getElementById("increment").addEventListener("click", () => {
+            quantity++;
+            quantityDisplay.textContent = quantity;
+        });
+
+        document.getElementById("decrement").addEventListener("click", () => {
+            if (quantity > 0) {
+                quantity--;
+                quantityDisplay.textContent = quantity;
+            }
+        });
+    
+        document.getElementById("reset").addEventListener("click", () => {
+            quantity = 0;
+            quantityDisplay.textContent = quantity;
+        });
+    </script>
+</body>
+</html>

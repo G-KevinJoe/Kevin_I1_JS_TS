@@ -1,0 +1,79 @@
+<!-- 8. DOM Manipulation
+Write JavaScript to create a new <li> element representing a shopping cart item, add the
+product name and quantity as text, and append it to an existing <ul> element.
+Write JavaScript to store and retrieve shopping cart details using localStorage. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+
+    <label>
+        Product name:
+        <input id="productName" type="text" value="Notebook">
+    </label>
+    <label>
+        Quantity:
+        <input id="quantity" type="number" min="1" value="1">
+    </label>
+    <button id="addItem">Add item</button>
+    <button id="saveCart">Save cart</button>
+    <button id="loadCart">Load cart</button>
+
+    <ul id="cartList"></ul>
+    <p id="cartMessage"></p>
+
+    <script>
+        let shoppingCart = [];
+
+        function displayCart() {
+            const cartList = document.getElementById("cartList");
+            cartList.innerHTML = "";
+
+            shoppingCart.forEach((item) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = item.productName + " (quantity: " + item.quantity + ")";
+                cartList.appendChild(listItem);
+            });
+        }
+
+        document.getElementById("addItem").addEventListener("click", () => {
+            const productName = document.getElementById("productName").value.trim();
+            const quantity = Number(document.getElementById("quantity").value);
+
+            if (productName === "" || quantity < 1) {
+                document.getElementById("cartMessage").textContent =
+                    "Enter a product name and a quantity of at least 1.";
+                return;
+            }
+
+            shoppingCart.push({ productName, quantity });
+            displayCart();
+            document.getElementById("cartMessage").textContent = "Item added to the cart.";
+        });
+
+        document.getElementById("saveCart").addEventListener("click", () => {
+            localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+            document.getElementById("cartMessage").textContent = "Cart saved.";
+        });
+
+        document.getElementById("loadCart").addEventListener("click", () => {
+            const savedCart = localStorage.getItem("shoppingCart");
+
+            if (savedCart === null) {
+                document.getElementById("cartMessage").textContent = "No saved cart was found.";
+                return;
+            }
+
+            shoppingCart = JSON.parse(savedCart);
+            displayCart();
+            document.getElementById("cartMessage").textContent = "Cart loaded.";
+        });
+    </script>
+</body>
+</html>

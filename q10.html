@@ -1,0 +1,73 @@
+<!-- 10. Customer Registration Form Validation
+Create a customer registration form and validate the following:
+• a. Customer name – only alphabets and spaces.
+• b. Email – valid email format.
+• c. Password – minimum 8 characters. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Registration</title>
+</head>
+<body>
+    <h1>Customer Registration</h1>
+    <form id="registrationForm" novalidate>
+        <label>
+            Customer name:
+            <input id="customerName" type="text">
+        </label>
+        <p id="nameError"></p>
+
+        <label>
+            Email:
+            <input id="email" type="email">
+        </label>
+        <p id="emailError"></p>
+
+        <label>
+            Password:
+            <input id="password" type="password">
+        </label>
+        <p id="passwordError"></p>
+
+        <button type="submit">Validate registration</button>
+    </form>
+    <p id="formMessage"></p>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const customerName = document.getElementById("customerName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const namePattern = /^[A-Za-z ]+$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let isValid = true;
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("passwordError").textContent = "";
+            document.getElementById("formMessage").textContent = "";
+            if (!namePattern.test(customerName)) {
+                document.getElementById("nameError").textContent =
+                    "Use letters and spaces only for the customer name.";
+                isValid = false;
+            }
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Enter valid email address containing @ and .";
+                isValid = false;
+            }
+            if (password.length < 8) {
+                document.getElementById("passwordError").textContent =
+                    "Password must contain 8 characters.";
+                isValid = false;
+            }
+            if (isValid) {
+                document.getElementById("formMessage").textContent =
+                    "Registration details are valid.";
+            }
+        });
+    </script>
+</body>
+</html>
